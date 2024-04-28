@@ -1,15 +1,18 @@
 const express = require('express');
 const cors = require('cors');
 const multer = require('multer');
+const bodyParser = require('body-parser');
+const { spawn } = require('child_process');
 
 const app = express();
 const upload = multer({ dest: 'uploads/' });
 
 app.use(cors());
+app.use(bodyParser.json());
 
 // Route for image upload handling
-app.post('/upload-image', upload.single('image'), (req, res) => {
-    const file = req.file;
+app.post('/upload-image', upload.single('file'), (req, res) => {
+    const fileData = req.file;
 
     // Error handling
     if (!file) {
@@ -17,7 +20,7 @@ app.post('/upload-image', upload.single('image'), (req, res) => {
     }
         
     // Image upload for OCR
-
+    const pythonProcess = spawn('python', ['path/to/your/python_script.py', fileData]);
 
     // Return total cost
 
