@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from skimage.filters import threshold_local
 from PIL import Image
 
-from functions import opencv_resize, plot_rgb, plot_gray
+from functions import opencv_resize, plot_rgb, plot_gray, get_receipt_contour, contour_to_rect, wrap_perspective, bw_scanner
 
 def usr_input():
     # get the image
@@ -43,12 +43,27 @@ def usr_input():
     # Detect all contours in Canny-edged image
     contours, hierarchy = cv2.findContours(edged, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     image_with_contours = cv2.drawContours(image.copy(), contours, -1, (0,255,0), 3)
-    plot_rgb(image_with_contours)
+
+    # Get 10 largest contours
+    largest_contours = sorted(contours, key = cv2.contourArea, reverse = True)[:10]
+    image_with_largest_contours = cv2.drawContours(image.copy(), largest_contours, -1, (0,255,0), 3)
+    plot_rgb(image_with_largest_contours)
     plt.show()
+
+    return original, largest_contours, resize_ratio
+
+
 
 valid_receipt = False
 while not valid_receipt:
-    usr_input()
+    image, largest_contours, resize_ratio = usr_input()
     valid_receipt = input("Is this the correct receipt? (y/n) ").lower() == 'y'
 
 print("Processing receipt...")
+receipt_contour = get_receipt_contour(largest_contours)
+image_with_receipt_contour = cv2.drawContours(image.copy(), [receipt_contour], -1, (0, 255, 0), 2)
+# plot_rgb(image_with_receipt_contour)
+scanned = wrap_perspective(image.copy(), contour_to_rect(receipt_contour, resize_ratio))
+# plt.figure(figsize=(16,10))
+# plt.imshow(scanned)
+# plt.show()
