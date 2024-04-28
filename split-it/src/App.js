@@ -5,8 +5,6 @@ import Page2 from "./pages/page2";
 import "./App.css";
 
 function App() {
-<<<<<<< HEAD
-=======
   const [message, setMessage] = useState('ready');
   const [file, setFile] = useState(null);
 
@@ -45,7 +43,6 @@ function App() {
     }
   }
 
->>>>>>> b2fad957a3acc6398e4ffdcf52309b5146b1b22f
   return (
     <section className="hero">
       <div className="content">
