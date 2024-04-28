@@ -19,7 +19,7 @@ from functions import opencv_resize, plot_rgb, plot_gray, get_receipt_contour, c
 
 
 # get the image
-file_name = "/Users/ziqiangzhu/split-it/receipt_image/1.jpg"
+file_name = sys.argv[1]
 # img = Image.open(file_name)
 # img.thumbnail((800,800), Image.ANTIALIAS)
 
@@ -158,4 +158,5 @@ json_data = json.loads(response)
 # Print the JSON
 print(json.dumps(json_data, indent=2))
 
+sys.stdout.flush()
 
