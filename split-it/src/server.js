@@ -8,11 +8,11 @@ const app = express();
 const upload = multer({ dest: 'uploads/' });
 
 app.use(cors());
-app.use(bodyParser.json());
 
 // Route for image upload handling
 app.post('/upload-image', upload.single('file'), (req, res) => {
-    const fileData = req.file;
+    const file = req.file;
+    // Image upload for OCR
 
     // Error handling
     if (!file) {
