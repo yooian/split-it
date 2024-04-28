@@ -22,7 +22,8 @@ app.post('/upload-image', upload.single('file'), (req, res) => {
         
     // Image upload for OCR
     // Call Python script with image data as input
-    const pythonProcess = spawn('/usr/bin/python3', ['/Users/ianyoo/Documents/untitled folder/Development/GitHub/split-it/image-process/real-program.py', file.path]);
+    const pythonProcess = spawn('python3', ['./image-process/real-program.py', file.path]);
+    //const pythonProcess = spawn('pwd');
 
     let totalCostData = ''; // Initialize an empty string to accumulate data
 
