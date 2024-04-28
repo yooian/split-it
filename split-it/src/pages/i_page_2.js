@@ -39,9 +39,9 @@ function I_Page_2() {
                 console.log('Image uploaded successfully');
         
                 const data = await response.json();
-                const totalCost = data.totalCost;
-                console.log('Total Cost:', totalCost);
-                navigate("/i_page_3", { state: { totalCost }});
+                const listOrders = data.listOrders;
+                console.log('Total Cost:', listOrders);
+                navigate("/i_page_3", { state: { listOrders }});
 
               } else {
                 console.error('Failed to upload image');

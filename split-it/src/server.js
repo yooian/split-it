@@ -65,23 +65,23 @@ app.post('/upload-image-2', upload.single('file'), (req, res) => {
     
     // Image upload for OCR
     // Call Python script with image data as input
-    const pythonProcess = spawn('python3', ['../../image-process/hello-world.py', file.path]);
+    const pythonProcess = spawn('python3', ['../../text-process/hello-world.py', file.path]);
 
-    let totalCostData = ''; // Initialize an empty string to accumulate data
+    let listO = ''; // Initialize an empty string to accumulate data
 
     // Handle stdout data from Python script
     pythonProcess.stdout.on('data', (output) => {
         if (output) {
-            totalCostData += output.toString();
+            listO += output.toString();
         }
     });
 
     pythonProcess.stdout.on('end', () => {
-        if (totalCostData) {
-            const totalCost = parseFloat(totalCostData.trim());
+        if (listO) {
+            const listOrders = parseJSON(listO.trim());
             // Send the response with the total cost
-            res.json({ totalCost });
-            console.log(`TC: ${ totalCost }`);
+            res.json({ listOrders });
+            console.log(`TC: ${ listOrders }`);
         } else {
             console.error('Received null or undefined data from stdout stream');
             res.status(500).send('Internal Server Error');
