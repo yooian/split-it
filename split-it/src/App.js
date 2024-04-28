@@ -1,5 +1,6 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { animated, useTransition } from 'react-spring';
 import F_PAGE_1 from "./pages/f_page_1";
 import F_PAGE_2 from "./pages/f_page_2";
 import F_PAGE_3 from './pages/f_page_3';

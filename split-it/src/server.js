@@ -23,7 +23,6 @@ app.post('/upload-image', upload.single('file'), (req, res) => {
     // Image upload for OCR
     // Call Python script with image data as input
     const pythonProcess = spawn('python3', ['./image-process/real-program.py', file.path]);
-    //const pythonProcess = spawn('pwd');
 
     let totalCostData = ''; // Initialize an empty string to accumulate data
 
@@ -45,16 +44,6 @@ app.post('/upload-image', upload.single('file'), (req, res) => {
             res.status(500).send('Internal Server Error');
         }
     });
-
-    // Handle errors or script termination
-    // pythonProcess.on('close', (code) => {
-    //     if (code !== 0) {
-    //         console.error(`Python script exited with code ${code}`);
-    //         res.status(500).send('Internal Server Error');
-    //     } else {
-    //     res.status(200).json({ message: 'Image uploaded successfully' });
-    //     }
-    // });
 
     // Success response
     console.log('Uploaded file:', file);
