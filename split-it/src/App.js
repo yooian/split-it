@@ -5,19 +5,18 @@ import './App.css';
 function App() {
   const [message, setMessage] = useState('ready');
   const [file, setFile] = useState(null);
-  const [preview, setPreview] = useState(null);
 
   async function handleOnSubmit(e) {
     e.preventDefault();
 
-    if (!file) return; 
+    if (typeof file === 'undefined' || file === null) return; // Check if file is undefined or null
 
     const formData = new FormData();
     formData.append('file', file);
     formData.append('upload_preset', 'test-react-uploads-unsigned');
 
     try {
-      const response = await fetch('http://localhost:3000/upload-image', {
+      const response = await fetch('http://localhost:3001/upload-image', { // Fixed the URL
         method: 'POST',
         body: formData
       });
@@ -26,34 +25,19 @@ function App() {
         console.log('Image uploaded successfully');
         setMessage('Image uploaded successfully');
       } else {
-        const errorResponse = await response.json();
-        console.error('Failed to upload image: ', errorResponse);
-        setMessage('Failed to upload image: ' + errorResponse.message);
+        console.error('Failed to upload image');
+        setMessage('Failed to upload image');
       }
     } catch (error) {
-      console.error('Error uploading image: ', error);
-      setMessage('Error uploading image: ' + error.message);
+      console.error('Error uploading image:', error);
+      setMessage('Error uploading image');
     }
   }
 
   function handleOnChange(e) {
     const target = e.target;
     if (target.files.length > 0) {
-      const selectedFile = target.files[0];
-      const allowedTypes = ['image/jpeg', 'image/png', 'image/gif']; 
-      if (allowedTypes.includes(selectedFile.type)) {
-        setFile(selectedFile);
-        const reader = new FileReader();
-        reader.onload = function(event) {
-          setPreview(event.target.result); 
-        };
-        reader.readAsDataURL(selectedFile);
-      } else {
-        console.log('Selected file is not a supported image type.');
-        setMessage('Please select a JPEG, PNG, or GIF image.');
-        setPreview(null); 
-        target.value = ''; 
-      }
+      setFile(target.files[0]);
     }
   }
 
@@ -70,13 +54,7 @@ function App() {
         </div>
       
         <form onSubmit={handleOnSubmit}>
-          <input type="file" 
-                name="image" 
-                accept="image/jpeg, image/png, image/gif" 
-                onChange={handleOnChange}
-          />
-          <p></p>
-          {preview && <img src={preview} alt="Preview" style={{ width: '400px', height: 'auto' }} />} 
+          <input type="file" name="image" onChange={handleOnChange} />
           <p></p>
           <button type="submit">Submit</button>
         </form>
