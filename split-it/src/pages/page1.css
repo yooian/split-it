@@ -1,4 +1,4 @@
-button {
+/*button {
     width: 165px;
     height: 62px;
     cursor: pointer;
@@ -30,11 +30,10 @@ button {
   }
 .button-container {
     display: flex;
-    justify-content: center; /* Horizontally center the buttons */
+    justify-content: center;
 }
 
 .button-container button {
-    /* Your button styles */
     width: 165px;
     height: 62px;
     cursor: pointer;
@@ -45,5 +44,6 @@ button {
     position: relative;
     background: #078646;
     transition: 0.1s;
-    margin-right: 90px; /* Adjust this value if needed */
+    margin-right: 90px;
 }
+*/

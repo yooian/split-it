@@ -1,7 +1,7 @@
 import React, { useState } from 'react'; // Import useState from React
 
 
-function Page2() {
+function F_Page_2() {
     const [message, setMessage] = useState('ready');
     const [file, setFile] = useState(null);
   
@@ -61,4 +61,4 @@ function Page2() {
       </div>
     );
 }
-export default Page2;
+export default F_Page_2;
