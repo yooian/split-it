@@ -1,22 +1,19 @@
 import React, { useState } from 'react';
+import logo from './logo.svg';
 import './App.css';
 
 function App() {
   const [message, setMessage] = useState('ready');
-  const [image, setImage] = useState(null);
+  const [file, setFile] = useState(null);
 
-  const handleOnChange = (event) => {
-    setImage(event.target.files[0]);
-  };
+  async function handleOnSubmit(e) {
+    e.preventDefault();
 
-  const handleOnSubmit = async (event) => {
-    event.preventDefault();
-
-    if (typeof image === 'undefined' || image === null) return; // Check if file is undefined or null
+    if (typeof file === 'undefined' || file === null) return; // Check if file is undefined or null
 
     const formData = new FormData();
-    formData.append('image', image);
-    //formData.append('upload_preset', 'test-react-uploads-unsigned');
+    formData.append('file', file);
+    formData.append('upload_preset', 'test-react-uploads-unsigned');
 
     try {
       const response = await fetch('http://localhost:3001/upload-image', { // Fixed the URL
@@ -35,20 +32,35 @@ function App() {
       console.error('Error uploading image:', error);
       setMessage('Error uploading image');
     }
-  };
+  }
+
+  function handleOnChange(e) {
+    const target = e.target;
+    if (target.files.length > 0) {
+      setFile(target.files[0]);
+    }
+  }
 
   return (
     <div className="App">
       <div className="content">
-        <h1>Split-it</h1>
+        <h1 className="name">Split-It</h1>
+        <div>
+        
+            <button className="bigButton" >Family</button>
+
+            <button className="individual-button">Individual</button>
+            
+        </div>
       
         <form onSubmit={handleOnSubmit}>
-          <input type="file" onChange={handleOnChange} />
+          <input type="file" name="image" onChange={handleOnChange} />
           <p></p>
           <button type="submit">Submit</button>
         </form>
       </div>
       <p>{message}</p>
+
     </div>
   );
 }
