@@ -1,62 +1,72 @@
-import React, { useState } from 'react'; // Import useState from React
+import React from 'react'; // Import useState from React
+import { useNavigate } from "react-router-dom";
+import { Button, styled } from '@mui/material';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import { useState } from "react";
 
+const VisuallyHiddenInput = styled('input')({
+  clip: 'rect(0 0 0 0)',
+  clipPath: 'inset(50%)',
+  height: 1,
+  overflow: 'hidden',
+  position: 'absolute',
+  bottom: 0,
+  left: 0,
+  whiteSpace: 'nowrap',
+  width: 1,
+});
 
 function F_Page_2() {
-    const [message, setMessage] = useState('ready');
-    const [file, setFile] = useState(null);
-  
-    async function handleOnSubmit(e) {
-      e.preventDefault();
-  
-      if (typeof file === 'undefined' || file === null) return; // Check if file is undefined or null
-  
-      const formData = new FormData();
-      formData.append('file', file);
-      formData.append('upload_preset', 'test-react-uploads-unsigned');
-  
-      try {
-        const response = await fetch('http://localhost:3001/upload-image', { // Fixed the URL
-          method: 'POST',
-          body: formData
-        });
-        if (response.ok) {
-          console.log('Image uploaded successfully');
-          setMessage('Image uploaded successfully');
-  
-          const data = await response.json();
-          const totalCost = data.totalCost;
-          console.log('Total Cost:', totalCost);
-          setMessage(`Total Cost: ${ totalCost }`);
-        } else {
-          console.error('Failed to upload image');
-          setMessage('Failed to upload image');
-        }
-      } catch (error) {
-        console.error('Error uploading image:', error);
-        setMessage('Error uploading image');
-      }
-    }
-  
-    function handleOnChange(e) {
-      const target = e.target;
-      if (target.files.length > 0) {
-        setFile(target.files[0]);
-      }
-    }
+  const [message, setMessage] = useState('');
+    const navigate = useNavigate();
 
+    const handleSubmit = async (event)=> {
+      const file = event.target.files[0];
+      
+
+      if (file) {
+        const formData = new FormData();
+        formData.append('file', file);
+
+        formData.append('upload_preset', 'test-react-uploads-unsigned');
+    
+        try {
+          const response = await fetch('http://localhost:3001/upload-image', {
+            method: 'POST',
+            body: formData
+          });
+              if (response.ok) {
+                console.log('Image uploaded successfully');
+        
+                const data = await response.json();
+                const totalCost = data.totalCost;
+                console.log('Total Cost:', totalCost);
+                navigate("/f_page_3", { state: { totalCost }});
+
+              } else {
+                console.error('Failed to upload image');
+                setMessage('Failed to upload image. Please take another picture and try again');
+              }
+            
+          
+          } catch (error) {
+          console.error('Error uploading image:', error);
+          setMessage('Error uploading image. Please take another picture and try again'); 
+        }
+      }
+    };
     return (
-        <div className="App">
-        <div className="content">
-          <form onSubmit={handleOnSubmit}>
-            <input type="file" name="image" 
-                  onChange={handleOnChange} 
-                  accept="image/*" /> 
-            <p></p>
-            <div className='button-submit'>
-              <button type="submit">Submit</button>
-            </div>
-          </form>
-        </div>
+      <div>
+        <Button
+          component="label"
+          role={undefined}
+          variant="contained"
+          tabIndex={-1}
+          startIcon={<CloudUploadIcon />}
+        >
+          Upload file
+          <VisuallyHiddenInput type="file" onChange={handleSubmit}/>
+        </Button>
         <p>{message}</p>
       </div>
     );

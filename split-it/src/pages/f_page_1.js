@@ -1,9 +1,8 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import "./page1.css";
-import { Button, styled, Typography } from "@mui/material";
+import { Button, styled } from "@mui/material";
 
-function Page1() {
+function F_Page_1() {
     const GreenButton = styled(Button)(({theme})=>({
         backgroundColor: theme.palette.primary.main, 
         color:"white",
@@ -23,4 +22,4 @@ function Page1() {
     );
 }
 
-export default Page1;
+export default F_Page_1;

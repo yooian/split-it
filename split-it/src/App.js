@@ -1,14 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Page1 from "./pages/page1";
-import F_Page_2 from "./pages/f_page_2"; 
+import F_PAGE_1 from "./pages/f_page_1";
+import F_PAGE_2 from "./pages/f_page_2";
+import F_PAGE_3 from './pages/f_page_3';
 
-import { ThemeProvider, Typography, createTheme } from '@mui/material';
-import Button from '@mui/material/Button';
-import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
-import PublishIcon from '@mui/icons-material/Publish';
-
-const theme = createTheme();
+import { Typography } from '@mui/material';
 
 function App(){
   return (
@@ -18,8 +14,9 @@ function App(){
           <p>
             <Router>
               <Routes>
-                <Route exact path="/" element={<Page1 />} />
-                <Route path="/f_page_2" element={<F_Page_2 />} /> 
+                <Route exact path="/" element={<F_PAGE_1 />} />
+                <Route path="/f_page_2" element={<F_PAGE_2 />} />
+                <Route path="/f_page_3" element={<F_PAGE_3 />} />
               </Routes>
             </Router>
           </p>
