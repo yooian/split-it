@@ -4,6 +4,7 @@ import F_PAGE_1 from "./pages/f_page_1";
 import F_PAGE_2 from "./pages/f_page_2";
 import F_PAGE_3 from './pages/f_page_3';
 import I_PAGE_2 from './pages/i_page_2';
+import I_PAGE_3 from './pages/i_page_3';
 import { CssBaseline, ThemeProvider } from '@mui/material';
 import { theme } from "./theme";
 
