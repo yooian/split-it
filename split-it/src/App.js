@@ -44,7 +44,14 @@ function App() {
   return (
     <div className="App">
       <div className="content">
-        <h1>Split-it</h1>
+        <h1 className="name">Split-It</h1>
+        <div>
+        
+            <button className="bigButton" >Family</button>
+
+            <button className="individual-button">Individual</button>
+            
+        </div>
       
         <form onSubmit={handleOnSubmit}>
           <input type="file" name="image" onChange={handleOnChange} />
@@ -53,6 +60,7 @@ function App() {
         </form>
       </div>
       <p>{message}</p>
+
     </div>
   );
 }
