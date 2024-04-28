@@ -1,26 +1,41 @@
-/* App.css */
-.App {
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing:border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+body {
+  background-image: url('images/theme.jpg');
+  background-size: cover; 
+}
+.hero{
   display: flex;
-  flex-direction: column; /* Align children vertically */
-  justify-content: flex-start; /* Align children at the start of the container */
-  align-items: center; /* Center horizontally */
-  height: 100vh; /* Make the container fill the entire viewport height */
+  height: 100vh;
 }
-
-.name {
-  margin-bottom: 20px; /* Adjust margin at the bottom */
-  color: blue;
-}
-
-.button-container {
+.container {
   display: flex;
-  align-items: center; /* Center buttons vertically */
+  justify-content: center;
+  align-items: center;
+  height: 100vh; 
+}
+.content {
+  display: flex;
+  flex-direction: column;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  justify-content: center;
+  align-items: center;
+  color: white;
+}
+.content h1 {
+  font-size: 56px;
+  font-weight:bolder
+}
+.content p{
+  font-size: 22px;
+  margin: 15px 0;
+  max-width: 550px;
+  letter-spacing: 2px;
 }
 
-.bigButton,
-.individual-button {
-  color: blue;
-  padding: 15px 30px;
-  margin: 0 10px;
-  font-size: 1.2em;
-}
