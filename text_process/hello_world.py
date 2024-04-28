@@ -148,14 +148,14 @@ if last_brace_index != -1:
 
 # Clean up the text and format it as a JSON array
 response = "[" + response + "]"
-print(response)
+# print(response)
 
 # input("Press Enter to continue...")
 
 # Parse the JSON
-# json_data = json.loads(response)
+json_data = json.loads(response)
 
-# # Print the JSON
-# print(json.dumps(json_data, indent=2))
+# Print the JSON
+print(json.dumps(json_data, indent=2))
 
 
