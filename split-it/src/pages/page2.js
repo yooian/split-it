@@ -1,4 +1,4 @@
-import React, { useState } from 'react'; // Import useState from React
+import React from 'react'; // Import useState from React
 
 function Page2() { // Change function name to start with uppercase letter
   const [message, setMessage] = useState('ready');

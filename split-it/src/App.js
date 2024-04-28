@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Page1 from "./pages/page1";
 import Page2 from "./pages/page2"; 
 import "./App.css";
+import { useState } from "react";
 
 function App() {
   const [message, setMessage] = useState('ready');
