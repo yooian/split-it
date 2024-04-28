@@ -12,7 +12,8 @@ app.use(bodyParser.json());
 
 // Route for image upload handling
 app.post('/upload-image', upload.single('file'), (req, res) => {
-    const fileData = req.file;
+    // Extract image data from request body
+    const file = req.file;
 
     // Error handling
     if (!file) {
@@ -20,18 +21,47 @@ app.post('/upload-image', upload.single('file'), (req, res) => {
     }
         
     // Image upload for OCR
-    const pythonProcess = spawn('python', ['path/to/your/python_script.py', fileData]);
+    // Call Python script with image data as input
+    const pythonProcess = spawn('/usr/bin/python3', ['/Users/ianyoo/Documents/untitled folder/Development/GitHub/split-it/image-process/real-program.py', file.path]);
 
-    // Return total cost
+    let totalCostData = ''; // Initialize an empty string to accumulate data
+
+    // Handle stdout data from Python script
+    pythonProcess.stdout.on('data', (output) => {
+        if (output) {
+            totalCostData += output.toString();
+        }
+    });
+
+    pythonProcess.stdout.on('end', () => {
+        if (totalCostData) {
+            const totalCost = parseFloat(totalCostData.trim());
+            // Send the response with the total cost
+            res.json({ totalCost });
+            console.log(`TC: ${ totalCost }`);
+        } else {
+            console.error('Received null or undefined data from stdout stream');
+            res.status(500).send('Internal Server Error');
+        }
+    });
+
+    // Handle errors or script termination
+    // pythonProcess.on('close', (code) => {
+    //     if (code !== 0) {
+    //         console.error(`Python script exited with code ${code}`);
+    //         res.status(500).send('Internal Server Error');
+    //     } else {
+    //     res.status(200).json({ message: 'Image uploaded successfully' });
+    //     }
+    // });
 
     // Success response
     console.log('Uploaded file:', file);
-    res.status(200).json({ message: 'Image uploaded successfully' });
 });
 
 
 const PORT = 3001; //process.env.PORT <- allows dynamic port config by environment (ex, heroku)
 
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+    console.log(`Server is running on port ${ PORT }`);
 });

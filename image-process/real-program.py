@@ -1,3 +1,4 @@
+import sys
 import numpy as np
 import cv2
 import matplotlib.pyplot as plt
@@ -14,7 +15,7 @@ from functions import opencv_resize, plot_rgb, plot_gray, get_receipt_contour, c
 
 def usr_input():
     # get the image
-    file_name = input("Enter the file name: ")
+    file_name = sys.argv[1]
     # img = Image.open(file_name)
     # img.thumbnail((800,800), Image.ANTIALIAS)
 
@@ -52,8 +53,8 @@ def usr_input():
     # Get 10 largest contours
     largest_contours = sorted(contours, key = cv2.contourArea, reverse = True)[:10]
     image_with_largest_contours = cv2.drawContours(image.copy(), largest_contours, -1, (0,255,0), 3)
-    plot_rgb(image_with_largest_contours)
-    plt.show()
+    # plot_rgb(image_with_largest_contours)
+    #plt.show()
 
     return original, largest_contours
 
@@ -61,20 +62,22 @@ def usr_input():
 receipt_contour = None
 
 # loop until receipt contour is found (4 corners are found)
-while receipt_contour is None:
-    # first time user input
-    valid_receipt = False
 
-    # loop until user confirms the receipt and contour look correctly
-    while not valid_receipt:
-        image, largest_contours = usr_input()
-        valid_receipt = input("Is this the correct receipt? (y/n) ").lower() == 'y'
-    #---------------------------------------------------------------------------------------------------------------------
-    # exiting the while with valid contour on the receipt
+# first time user input
+valid_receipt = False
 
-    # start processing the receipt with the selected contour
-    print("Processing receipt...")
-    receipt_contour = get_receipt_contour(largest_contours)
+# loop until user confirms the receipt and contour look correctly
+while not valid_receipt:
+    image, largest_contours = usr_input()
+    valid_receipt = True
+    # valid_receipt = input("Is this the correct receipt? (y/n) ").lower() == 'y'
+#---------------------------------------------------------------------------------------------------------------------
+# exiting the while with valid contour on the receipt
+
+# start processing the receipt with the selected contour
+# print("Processing receipt...")
+receipt_contour = get_receipt_contour(largest_contours)
+
 
 # debugging parts
 #---------------------------------------------------------------
@@ -105,5 +108,7 @@ match = re.search(total_pattern, extracted_text)
 if match:
     total_amount = match.group(1)
     print(total_amount)
-else:
-    print("Total amount not found.")
+#else:
+    # print("Total amount not found.")
+
+sys.stdout.flush()

@@ -20,10 +20,14 @@ function App() {
         method: 'POST',
         body: formData
       });
-      
       if (response.ok) {
         console.log('Image uploaded successfully');
         setMessage('Image uploaded successfully');
+
+        const data = await response.json();
+        const totalCost = data.totalCost;
+        console.log('Total Cost:', totalCost);
+        setMessage(`Total Cost: ${ totalCost }`);
       } else {
         console.error('Failed to upload image');
         setMessage('Failed to upload image');
