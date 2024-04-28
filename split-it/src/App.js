@@ -25,6 +25,7 @@ function App(){
                 <Route path="/f_page_2" element={<F_PAGE_2 />} />
                 <Route path="/f_page_3" element={<F_PAGE_3 />} />
                 <Route path="/i_page_2" element={<I_PAGE_2 />} />
+                <Route path="/i_page_3" element={<I_PAGE_3 />} />
               </Routes>
             </Router>
           </p>
