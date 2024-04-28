@@ -65,7 +65,7 @@ app.post('/upload-image-2', upload.single('file'), (req, res) => {
     
     // Image upload for OCR
     // Call Python script with image data as input
-    const pythonProcess = spawn('python3', ['../../text-process/hello-world.py', file.path]);
+    const pythonProcess = spawn('python', ['../../text_process/hello_world.py', file.path]);
 
     let listO = ''; // Initialize an empty string to accumulate data
 
