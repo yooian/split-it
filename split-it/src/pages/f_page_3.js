@@ -45,7 +45,7 @@ function F_Page_3() {
         if (value !== null && value >= 0 && !isNaN(value) && !isNaN(totalCost)) {
             const divisionResult = totalCost / value;
             if (!isNaN(divisionResult) && isFinite(divisionResult)) {
-                setMessage(divisionResult.toFixed(2)); 
+                setMessage('$' + divisionResult.toFixed(2) + ' per person!'); 
             } else {
                 setMessage('Error: Division result is not a valid number');
             }
