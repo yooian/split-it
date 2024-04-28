@@ -22,3 +22,8 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+# archive for the images
+image-process/archive
+
+# pycache
+__pycache__/

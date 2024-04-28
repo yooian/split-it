@@ -15,7 +15,7 @@ from functions import opencv_resize, plot_rgb, plot_gray, get_receipt_contour, c
 def usr_input():
     # get the image
     file_name = input("Enter the file name: ")
-    img = Image.open(file_name)
+    # img = Image.open(file_name)
     # img.thumbnail((800,800), Image.ANTIALIAS)
 
     # # show the thumbnail
@@ -47,31 +47,45 @@ def usr_input():
 
     # Detect all contours in Canny-edged image
     contours, hierarchy = cv2.findContours(edged, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
-    image_with_contours = cv2.drawContours(image.copy(), contours, -1, (0,255,0), 3)
+    # image_with_contours = cv2.drawContours(image.copy(), contours, -1, (0,255,0), 3)
 
     # Get 10 largest contours
     largest_contours = sorted(contours, key = cv2.contourArea, reverse = True)[:10]
     image_with_largest_contours = cv2.drawContours(image.copy(), largest_contours, -1, (0,255,0), 3)
-    # plot_rgb(image_with_largest_contours)
-    # plt.show()
+    plot_rgb(image_with_largest_contours)
+    plt.show()
 
-    return original, largest_contours, resize_ratio
+    return original, largest_contours
 
+# Get the receipt contour for the first time
+receipt_contour = None
 
+# loop until receipt contour is found (4 corners are found)
+while receipt_contour is None:
+    # first time user input
+    valid_receipt = False
 
-valid_receipt = False
-while not valid_receipt:
-    image, largest_contours, resize_ratio = usr_input()
-    valid_receipt = input("Is this the correct receipt? (y/n) ").lower() == 'y'
+    # loop until user confirms the receipt and contour look correctly
+    while not valid_receipt:
+        image, largest_contours = usr_input()
+        valid_receipt = input("Is this the correct receipt? (y/n) ").lower() == 'y'
+    #---------------------------------------------------------------------------------------------------------------------
+    # exiting the while with valid contour on the receipt
 
-print("Processing receipt...")
-receipt_contour = get_receipt_contour(largest_contours)
-image_with_receipt_contour = cv2.drawContours(image.copy(), [receipt_contour], -1, (0, 255, 0), 2)
+    # start processing the receipt with the selected contour
+    print("Processing receipt...")
+    receipt_contour = get_receipt_contour(largest_contours)
+
+# debugging parts
+#---------------------------------------------------------------
+# image_with_receipt_contour = cv2.drawContours(image.copy(), [receipt_contour], -1, (0, 255, 0), 2)
 # plot_rgb(image_with_receipt_contour)
-scanned = wrap_perspective(image.copy(), contour_to_rect(receipt_contour, resize_ratio))
+
+# scanned = wrap_perspective(image.copy(), contour_to_rect(receipt_contour, resize_ratio))
 # plt.figure(figsize=(16,10))
 # plt.imshow(scanned)
 # plt.show()
+#---------------------------------------------------------------
 
 d = pytesseract.image_to_data(image, output_type=Output.DICT)
 n_boxes = len(d['level'])
@@ -84,7 +98,6 @@ for i in range(n_boxes):
 
 extracted_text = pytesseract.image_to_string(image)
 # print(extracted_text)
-
 
 total_pattern = r"(?i)total[\s]*[£$€]?[\s]*([0-9]*[.,][0-9]{2})"
 match = re.search(total_pattern, extracted_text)
