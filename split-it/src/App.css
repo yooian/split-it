@@ -24,3 +24,8 @@
   margin: 0 10px;
   font-size: 1.2em;
 }
+
+.home-link {
+  text-decoration: none; /* Remove underline */
+  color: inherit; /* Inherit color from parent */
+}

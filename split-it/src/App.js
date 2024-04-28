@@ -1,67 +1,34 @@
-import React, { useState } from 'react';
-import logo from './logo.svg';
+import React from 'react';
 import './App.css';
+import { BrowserRouter, Routes, Route, Link } from 'react-router-dom';
+import Family from './pages/Family';
 
 function App() {
-  const [message, setMessage] = useState('ready');
-  const [file, setFile] = useState(null);
-
-  async function handleOnSubmit(e) {
-    e.preventDefault();
-
-    if (typeof file === 'undefined' || file === null) return; // Check if file is undefined or null
-
-    const formData = new FormData();
-    formData.append('file', file);
-    formData.append('upload_preset', 'test-react-uploads-unsigned');
-
-    try {
-      const response = await fetch('http://localhost:3000/upload-image', { // Fixed the URL
-        method: 'POST',
-        body: formData
-      });
-      
-      if (response.ok) {
-        console.log('Image uploaded successfully');
-        setMessage('Image uploaded successfully');
-      } else {
-        console.error('Failed to upload image');
-        setMessage('Failed to upload image');
-      }
-    } catch (error) {
-      console.error('Error uploading image:', error);
-      setMessage('Error uploading image');
-    }
-  }
-
-  function handleOnChange(e) {
-    const target = e.target;
-    if (target.files.length > 0) {
-      setFile(target.files[0]);
-    }
-  }
-
   return (
-    <div className="App">
-      <div className="content">
-        <h1 className="name">Split-It</h1>
+    <BrowserRouter>
+      <div className="App">
+        <nav>
+          <Link to="/" className='home-link'>
+            <h1 className="name">SPLIT-IT</h1>
+          </Link>
+        </nav>
         <div>
-        
-            <button className="bigButton" >Family</button>
-
-            <button className="individual-button">Individual</button>
-            
+          <Routes>
+            <Route path="/family" element={<Family />} />
+            {/* Render the "Family" button only if the current route is not "/family" */}
+            <Route path="*" element={<FamilyButton />} />
+          </Routes>
         </div>
-      
-        <form onSubmit={handleOnSubmit}>
-          <input type="file" name="image" onChange={handleOnChange} />
-          <p></p>
-          <button type="submit">Submit</button>
-        </form>
       </div>
-      <p>{message}</p>
+    </BrowserRouter>
+  );
+}
 
-    </div>
+function FamilyButton() {
+  return (
+    <Link to="/family">
+      <button className="bigButton">Family</button>
+    </Link>
   );
 }
 
