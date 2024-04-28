@@ -16,7 +16,7 @@ function App() {
     formData.append('upload_preset', 'test-react-uploads-unsigned');
 
     try {
-      const response = await fetch('http://localhost:3000/upload-image', { // Fixed the URL
+      const response = await fetch('http://localhost:3001/upload-image', { // Fixed the URL
         method: 'POST',
         body: formData
       });
