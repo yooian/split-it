@@ -78,7 +78,7 @@ app.post('/upload-image-2', upload.single('file'), (req, res) => {
 
     pythonProcess.stdout.on('end', () => {
         if (listO) {
-            const listOrders = parseJSON(listO.trim());
+            const listOrders = JSON.parse(listO.trim());
             // Send the response with the total cost
             res.json({ listOrders });
             console.log(`TC: ${ listOrders }`);

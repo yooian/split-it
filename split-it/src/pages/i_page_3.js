@@ -5,6 +5,7 @@ import { useLocation } from 'react-router-dom';
 
 
 function I_Page_3() {
+    const location = useLocation();
     const { listorder } = location.state || {};
 
     return (
