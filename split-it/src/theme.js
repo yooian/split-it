@@ -1,20 +1,26 @@
 import { createTheme } from "@mui/material";
+import { Button, styled } from "@mui/material";
 
 export const theme = createTheme({
     palette:{
-        primary:{
-            main:"#7DD181",
-            light:"#B6F9C9",
+        primary: {
+            main: "#7DD181",
+            light: "#B6F9C9",
         },
-        secondary:{
-            main:"#96E8BC",
-            light:"#C9FFE2",
+        secondary: {
+            main: "#96E8BC",
+            light: "#C9FFE2",
         },
-        otherColor:{
-            main:"#4B7F52"
+        otherColor: {
+            main: "#4B7F52",
+        },
+        background: {
+            default: "#C9FFE2"
         }
-
     },
+    // typography: {
+    //     fontFamily: 
+    // },
     components: {
         MuiTypography: {
           defaultProps: {
@@ -34,3 +40,15 @@ export const theme = createTheme({
         },
       },
 });
+
+export const GreenButton = styled(Button)(({theme})=>({
+    backgroundColor: theme.palette.primary.main, 
+    color:"white",
+    margin: 5,
+    width: 100,
+    align: "center",
+    "&:hover":{
+        backgroundColor:"#4B7F52",
+        color:"#C9FFE2",
+    },
+}));

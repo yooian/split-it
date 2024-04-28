@@ -1,6 +1,6 @@
 import React from 'react'; // Import useState from React
 import { useNavigate } from "react-router-dom";
-import { Button, styled } from '@mui/material';
+import { Button, styled, Stack } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import { useState } from "react";
 
@@ -56,10 +56,11 @@ function F_Page_2() {
       }
     };
     return (
-      <div>
+      <Stack sx={{flexDirection: "column", spacing: "10", alignItems: "center", justifyContent: "space-between"}}>
         <Button
           component="label"
           role={undefined}
+          width="100"
           variant="contained"
           tabIndex={-1}
           startIcon={<CloudUploadIcon />}
@@ -68,7 +69,7 @@ function F_Page_2() {
           <VisuallyHiddenInput type="file" onChange={handleSubmit}/>
         </Button>
         <p>{message}</p>
-      </div>
+      </Stack>
     );
 }
 export default F_Page_2;

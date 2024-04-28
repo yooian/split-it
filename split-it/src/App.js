@@ -3,14 +3,18 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import F_PAGE_1 from "./pages/f_page_1";
 import F_PAGE_2 from "./pages/f_page_2";
 import F_PAGE_3 from './pages/f_page_3';
+import { CssBaseline, ThemeProvider } from '@mui/material';
+import { theme } from "./theme";
 
-import { Typography } from '@mui/material';
+import { Box, Typography } from '@mui/material';
+
 
 function App(){
   return (
-      <section className="hero">
-        <div className="content">
-          <Typography variant='h1'>Split-It</Typography>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Box sx={{flexDirection: "column", display: "flex", justifyContent: "space-between"}}>
+          <Typography variant='h1' align='center' paddingTop={10} paddingBottom={8}>Split-It</Typography>
           <p>
             <Router>
               <Routes>
@@ -20,8 +24,8 @@ function App(){
               </Routes>
             </Router>
           </p>
-        </div>
-    </section>
+      </Box>
+    </ThemeProvider>
   );
 }
 

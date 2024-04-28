@@ -5,7 +5,7 @@ import {
   numberInputClasses,
 } from '@mui/base/Unstable_NumberInput';
 import { styled } from '@mui/system';
-import { Button } from '@mui/material';
+import { Button, Stack } from '@mui/material';
 
 import { useLocation } from 'react-router-dom';
 
@@ -55,16 +55,16 @@ function F_Page_3() {
     };
 
     return (
-        <div>
+        <Stack sx={{flexDirection: "column", spacing: "10", alignItems: "center", justifyContent: "space-between"}}>
             <NumberInput
             aria-label="Number input"
             placeholder="Type a number…"
             value={value}
             onChange={(event, val) => setValue(val)}
             />
-            <Button variant='contained' onClick={handleDivision}>Calculate Division</Button>
+            <Button variant='contained' paddingTop='100' onClick={handleDivision}>Calculate Division</Button>
             <p>{message}</p>
-        </div>
+        </Stack>
     );
 }
 
@@ -91,7 +91,7 @@ const grey = {
 
 const StyledInputRoot = styled('div')(
   ({ theme }) => `
-  width: 200px;
+  width: 250px;
   font-family: 'IBM Plex Sans', sans-serif;
   font-weight: 400;
   border-radius: 8px;
