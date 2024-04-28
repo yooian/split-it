@@ -12,6 +12,7 @@ app.use(bodyParser.json());
 
 // Route for image upload handling
 app.post('/upload-image', upload.single('file'), (req, res) => {
+    console.log("cwd:", process.cwd())
     // Extract image data from request body
     const file = req.file;
 
@@ -19,10 +20,11 @@ app.post('/upload-image', upload.single('file'), (req, res) => {
     if (!file) {
         return res.status(400).json({ error: 'No image file uploaded' });
     }
-        
+    
+    
     // Image upload for OCR
     // Call Python script with image data as input
-    const pythonProcess = spawn('python3', ['./image-process/real-program.py', file.path]);
+    const pythonProcess = spawn('python3', ['../../image-process/real-program.py', file.path]);
 
     let totalCostData = ''; // Initialize an empty string to accumulate data
 
