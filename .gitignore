@@ -24,3 +24,6 @@ yarn-error.log*
 
 # archive for the images
 image-process/archive
+
+# pycache
+__pycache__/
